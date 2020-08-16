@@ -17,7 +17,7 @@
     <div class="container">
       <div class="row">
         <div class="col city-date-placeholder">
-            <h1 id="city-placeholder">Dublin</h1>
+            <h1 id="city-placeholder" class="h1-class">Dublin</h1>
             <br />
             <p id="date-placeholder">
             </p>
@@ -26,11 +26,11 @@
         <div class="col city-date-placeholder">
             <div class="row purple">
                 <div class="col">
-                    <h2>☀️ <span id="temperature"></span><a href="#" id="celsius">°C</a> |
+                    <h2 class="h2-class">☀️ <span id="temperature"></span><a href="#" id="celsius">°C</a> |
                       <a href="#" id="fahrenheit">°F</a></h2>
                 </div>
                 <div class="col city-temp-placeholder">
-                    <h4>
+                    <h4 class="h4-class">
                       Precip: 10% <br /> Wind: 2 KM/h
                     </h4>
                 </div>
@@ -38,7 +38,7 @@
         </div>
         
       </div>
-      <div class="row pink">
+      <div class="row pink rowWithMargin">
           <div class="col">
               Mon <br> 🌦
             </div>
@@ -55,7 +55,8 @@
                   Fri <br> ☀️
                 </div>
     </div>
-    <div class="row orange">
+    <div class="row orange rowWithMargin">
+      <div class="col">
     <form class="form-inline" id="city-form">
         <div class="form-group mx-sm-3 mb-2">
           <label for="inputPassword2" class="sr-only">Enter city here</label>
@@ -64,7 +65,7 @@
         <button type="submit" class="btn btn-primary mb-2">Go</button>
         <button type="button" class="btn btn-success" id="currentButton">Current</button>
       </form>
-      
+    </div>
     </div>
     <script src="src/index.js"></script>
   </body>
