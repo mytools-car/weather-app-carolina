@@ -81,3 +81,8 @@ form {
   position: relative;
   margin-top: -8px;
 }
+
+.footer {
+  text-align: left;
+  font-size: 15px;
+}
