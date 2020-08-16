@@ -62,6 +62,7 @@ p {
 .city-temp-placeholder {
   border-style: solid;
   color: #1bb2a8;
+  margin-right: 5px;
 }
 
 form {
