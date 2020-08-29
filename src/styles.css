@@ -4,12 +4,29 @@ p {
   font-size: 20px;
 }
 
+span {
+  display: inline-block;
+}
+
+p::first-letter,
+span::first-letter {
+  text-transform: uppercase;
+}
+
+form {
+  margin-top: 7px;
+}
+
 .container {
   display: block;
   margin: 50px;
   padding: 20px;
   border-style: solid;
   border-color: #016ec6;
+}
+
+.col {
+  color: #ff3366;
 }
 
 .row {
@@ -53,10 +70,6 @@ p {
   border-color: #ffa826;
 }
 
-.col {
-  color: #ff3366;
-}
-
 .city-date-placeholder {
   position: relative;
   border-style: solid;
@@ -70,10 +83,6 @@ p {
   border-style: solid;
   color: #1bb2a8;
   margin-right: 10px;
-}
-
-form {
-  margin-top: 7px;
 }
 
 .btn-success {
