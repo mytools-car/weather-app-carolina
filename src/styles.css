@@ -102,3 +102,7 @@ form {
 .city-date-placeholder .active:hover {
   text-decoration: none;
 }
+
+#forecast-placeholder {
+  padding-left: 70px;
+}

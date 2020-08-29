@@ -1,19 +1,19 @@
+// Initialization with temperature from current position
 let apiKey = "01f3fb49b18b138eeaf7378abfb6d3c9";
-let currentUnit = "celsius";
-let city = "Dublin";
-let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-axios.get(url).then(getTemp);
+let currentUnit = null;
+getCurrentPosition();
 
+// To get weather forecast from the search bar/form
 function handleTemperatureForm(event) {
   event.preventDefault();
-  let city = document.querySelector("#city-input").value;
-
+  city = document.querySelector("#city-input").value;
   let cityPlaceholder = document.querySelector("#city-placeholder");
   cityPlaceholder.innerHTML = city;
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
   axios.get(url).then(getTemp);
 }
 
+// To set full date
 function setDate(timestamp) {
   let date = new Date(timestamp * 1000);
   let day = date.getDay();
@@ -27,10 +27,29 @@ function setDate(timestamp) {
   if (hours < 10) {
     hours = `0${hours}`;
   }
-  return `${dayToday}, ${hours}:${minutes}`;
+  return `${dayToday}, ${setHours(timestamp)}`;
 }
 
+// To set only hours
+function setHours(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  return `${hours}:${minutes}`;
+}
+
+// To get current temperature and invoke getForecast function
 function getTemp(response) {
+  let cityPlaceholder = document.querySelector("#city-placeholder");
+  city = response.data.name;
+  cityPlaceholder.innerHTML = city;
+
   let tempPlace = document.querySelector("#temperature");
   let temp_round = Math.round(response.data.main.temp);
   tempPlace.innerHTML = `${temp_round}`;
@@ -53,32 +72,51 @@ function getTemp(response) {
     "src",
     `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
+
+  let urlForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}&units=metric`;
+  axios.get(urlForecast).then(getForecast);
 }
 
+// To get weather forecast
+function getForecast(response) {
+  let forecastPlace = document.querySelector("#forecast-placeholder");
+  forecastPlace.innerHTML = null;
+  let forecast = null;
+
+  for (let i = 0; i < 6; i++) {
+    forecast = response.data.list[i];
+    forecastPlace.innerHTML += `<div class="col">
+      <h5>${setHours(forecast.dt)}</h5>
+      <img src="http://openweathermap.org/img/wn/${
+        forecast.weather[0].icon
+      }@2x.png" height="40" />
+      <div class="weather-forecast-temp">
+        <strong>${Math.round(forecast.main.temp_max)}</strong> ${Math.round(
+      forecast.main.temp_min
+    )}°C
+      </div>
+  </div>`;
+  }
+}
+
+// To get current coordinates
 function getCurrentPosition() {
   navigator.geolocation.getCurrentPosition(showPosition);
 }
 
+// To get weather forecast from current position (coordinates)
 function showPosition(position) {
   let lat = position.coords.latitude;
   let long = position.coords.longitude;
   let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${apiKey}`;
-  axios.get(url).then(getTempFromCoordinates);
+  axios.get(url).then(getTemp);
 }
 
-function getTempFromCoordinates(response) {
-  let tempPlace = document.querySelector("#temperature");
-  let temp_round = Math.round(response.data.main.temp);
-  tempPlace.innerHTML = `${temp_round}`;
-
-  let cityPlaceholder = document.querySelector("#city-placeholder");
-  cityPlaceholder.innerHTML = response.data.name;
-  currentUnit = "celsius";
-}
-
+// Go button event listener
 let form = document.querySelector("#city-form");
 form.addEventListener("submit", handleTemperatureForm);
 
+// F link event listener
 let fahrenLink = document.querySelector("#fahrenheit");
 fahrenLink.addEventListener("click", function () {
   if (currentUnit === "celsius") {
@@ -92,6 +130,7 @@ fahrenLink.addEventListener("click", function () {
   }
 });
 
+// C link event listener
 let celsiusLink = document.querySelector("#celsius");
 celsiusLink.addEventListener("click", function () {
   if (currentUnit === "fahrenheit") {
@@ -106,8 +145,6 @@ celsiusLink.addEventListener("click", function () {
   }
 });
 
-let cityPlaceholder = document.querySelector("#city-placeholder");
-cityPlaceholder.innerHTML = city;
-
+// Current button event listener
 let button = document.querySelector("#currentButton");
 button.addEventListener("click", getCurrentPosition);
