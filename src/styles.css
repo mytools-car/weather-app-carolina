@@ -93,3 +93,12 @@ form {
   text-align: left;
   font-size: 15px;
 }
+
+.city-date-placeholder .active {
+  color: #ab47bc;
+  cursor: default;
+}
+
+.city-date-placeholder .active:hover {
+  text-decoration: none;
+}

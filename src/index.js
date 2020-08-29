@@ -83,10 +83,12 @@ let fahrenLink = document.querySelector("#fahrenheit");
 fahrenLink.addEventListener("click", function () {
   if (currentUnit === "celsius") {
     let tempPlace = document.querySelector("#temperature");
-    console.log(tempPlace.innerHTML);
     let temp_round = Math.round((tempPlace.innerHTML * 9) / 5 + 32);
     tempPlace.innerHTML = `${temp_round}`;
     currentUnit = "fahrenheit";
+
+    celsiusLink.classList.remove("active");
+    fahrenLink.classList.add("active");
   }
 });
 
@@ -94,10 +96,13 @@ let celsiusLink = document.querySelector("#celsius");
 celsiusLink.addEventListener("click", function () {
   if (currentUnit === "fahrenheit") {
     let tempPlace = document.querySelector("#temperature");
-    console.log(tempPlace.innerHTML);
+
     let temp_round = Math.round((5 / 9) * (tempPlace.innerHTML - 32));
     tempPlace.innerHTML = `${temp_round}`;
     currentUnit = "celsius";
+
+    fahrenLink.classList.remove("active");
+    celsiusLink.classList.add("active");
   }
 });
 
