@@ -1,7 +1,9 @@
-// Initialization with temperature from current position
+// Initialization with temperature from Dublin
 let apiKey = "01f3fb49b18b138eeaf7378abfb6d3c9";
+let city = "Dublin";
 let currentUnit = null;
-getCurrentPosition();
+let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+axios.get(url).then(getTemp);
 
 // To get weather forecast from the search bar/form
 function handleTemperatureForm(event) {
