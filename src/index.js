@@ -47,6 +47,12 @@ function getTemp(response) {
 
   let datePlaceholder = document.querySelector("#date-placeholder");
   datePlaceholder.innerHTML = setDate(response.data.dt);
+
+  let iconPlaceholder = document.querySelector("#icon-placeholder");
+  iconPlaceholder.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+  );
 }
 
 function getCurrentPosition() {
@@ -70,28 +76,6 @@ function getTempFromCoordinates(response) {
   currentUnit = "celsius";
 }
 
-/*
-function setDate() {
-  let now = new Date();
-  let day = now.getDay();
-  let daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  let dayToday = daysOfWeek[day];
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
-
-  let datePlaceholder = document.querySelector("#date-placeholder");
-  datePlaceholder.innerHTML = `${dayToday}, ${hours}:${minutes}`;
-}
-
-setDate(); */
 let form = document.querySelector("#city-form");
 form.addEventListener("submit", handleTemperatureForm);
 
